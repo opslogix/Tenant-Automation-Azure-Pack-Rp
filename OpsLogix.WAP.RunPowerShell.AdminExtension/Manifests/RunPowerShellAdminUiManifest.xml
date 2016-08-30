@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<uiManifest>
+  <!--RunPowerShell Management-->
+  <extension name="RunPowerShellAdminExtension"
+             baseUri="~/Content/RunPowerShellAdmin">
+    <scripts>
+      <script src="~/Scripts/RunPowerShell.Controller.js" />
+      <script src="~/Scripts/RunPowerShell.TenantRunbooksTab.js" />
+      <script src="~/Scripts/RunPowerShell.TenantRunbooksSubTab.js" />
+      <script src="~/Scripts/RunPowerShell.QuickStartTab.js" />
+      <script src="~/Scripts/RunPowerShell.SettingsTab.js" />
+      <script src="~/RunPowerShellAdminExtension.js" />
+
+      <!--Self registration-->
+      <script src="~/extensions.data.js" />
+    </scripts>
+    <stylesheets>
+      <stylesheet src="~/Styles/RunPowerShellAdmin.css"/>
+      <stylesheet src="~/Styles/RunPowerShellControls.css"/>
+    </stylesheets>
+    <templates>
+      <template name="tenantRunbooksTab"
+        src="~/Templates/Tabs/TenantRunbooksTab.html" />
+      
+      <template name="tenantRunbooksTabEmpty"
+        src="~/Templates/Tabs/TenantRunbooksTabEmpty.html" />
+
+      <template name="tenantRunbooksSubTab"
+  src="~/Templates/Tabs/TenantRunbooksSubTab.html" />
+
+      <template name="tenantRunbooksSubTabEmpty"
+        src="~/Templates/Tabs/TenantRunbooksSubTabEmpty.html" />
+      
+      <template name="quickStartTab"
+                src="~/Templates/Tabs/QuickStartTab.html" />
+      <template name="quickStartTabContent"
+                src="~/Templates/Tabs/QuickStartTabContent.html" />
+      <template name="settingsTab"
+                src="~/Templates/Tabs/SettingsTab.html" />
+      <template name="registerEndpoint"
+                src="~/Templates/Dialogs/RegisterEndpoint.html" />
+      <template name="AddTenantRunbookWiz01"
+                  src="~/Templates/Dialogs/AddTenantRunbookWiz01.html" />
+      <template name="AddTenantRunbookWiz02"
+                  src="~/Templates/Dialogs/AddTenantRunbookWiz02.html" />
+      <template name="AddTenantRunbookWiz03"
+            src="~/Templates/Dialogs/AddTenantRunbookWiz03.html" />
+
+    </templates>
+  </extension>
+</uiManifest>

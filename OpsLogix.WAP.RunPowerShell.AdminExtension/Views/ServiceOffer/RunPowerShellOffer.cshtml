@@ -1,0 +1,25 @@
+﻿@using Microsoft.Portal.Framework;
+@*@using Microsoft.WindowsAzure.Server.SqlAdmin.AdminExtension.Bundles;*@
+@using Microsoft.WindowsAzure.Server.ServiceBus.AdminExtension;
+
+@{
+    ViewBag.Title = "Run Powershell";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutMinimal.cshtml";
+}
+
+<div id="runPowerSAdminQuotasContainer" class="sqlAdminQuotas">
+    <!--    <div class="hs-empty">
+                                     <div class="hs-empty-header">
+                <p id="msg-nothing">Runbooks</p>
+                                     </div>
+        </div>-->
+
+    <div class="gridContainer"></div>
+</div>
+
+@section ServiceOfferScripts {
+    <script src="~/Content/RunPowerShellAdmin/Scripts/RunPowerShell.ServiceOffer.js"></script>
+}

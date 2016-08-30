@@ -1,0 +1,46 @@
+
+<p class="aux-dialogHeader">Execute runbook for a VM</p>
+<p class="aux-dialogSubHeader">Enter the parameters for this runbook</p>
+
+<div id="demo-wizard-step-1">
+    
+    <div id="ParamVMsDiv">
+        <label id="ParamVMsLabel" for="VMParamDropDown">Virtual Machine</label>
+        <select id="VMParamDropDown" name="VMParamDropDown" data-fxcontroltype="fxDropdown" class="fx-dropdown fx-validation" data-val="true" data-val-required="Required" data-link=" data.selecteditem"></select>
+    </div>
+
+    <div id="BoolParamDiv">
+        <br />
+        <label for="BoolParamLabel" id="BoolParamLabel" class="aux-dialog-item">Boolean Parameter</label>
+        <select id="BoolParamDropDown" name="BoolParamDropDown" data-fxcontroltype="fxDropdown" class="fx-dropdown fx-validation" data-val="true" data-val-required="Required" data-link=" data.selecteditem"></select>
+    </div>
+
+    <div id="StringParamDiv">
+        <br />
+        <label for="StringParamLabel" id="StringParamLabel" class="aux-dialog-item">String Parameter</label>
+        <input id="StringParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="IntParamDiv">
+        <br />
+        <label for="IntParamLabel" id="IntParamLabel" class="aux-dialog-item">Integer Parameter</label>
+        <input id="IntParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" data-val-regex="Not a number" data-val-regex-pattern="\d{1,10}" />
+    </div>
+
+    <div id="DateParamDiv">
+        <br />
+        <label for="DateParamLabel" id="DateParamLabel" class="aux-dialog-item">Date Parameter</label>
+        <input id="DateParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="StringArrayParamDiv">
+        <br />
+        <label for="StringArrayParamLabel" id="StringArrayParamLabel" class="aux-dialog-item">String Array Parameter</label>
+        <input id="StringArrayParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+</div>

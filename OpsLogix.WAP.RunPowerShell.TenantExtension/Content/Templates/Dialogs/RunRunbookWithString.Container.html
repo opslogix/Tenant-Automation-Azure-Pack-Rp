@@ -1,0 +1,17 @@
+﻿<div class="aux-manageAdministratorsContainer">
+    <p class="aux-dialogHeader"></p>
+    <p class="aux-dialogSubHeader"></p>
+    <p class="aux-dialogDescription"></p>
+    <div id="aux-manageCoAdministratorForm" class="aux-dialog-form">
+        <div class="aux-dialog-item">
+            <label for="coAdminUsername">
+                {{res "Name" /}}
+            </label>
+            <input type="text" id="coAdminUsername" name="coAdminUsername" data-link="coAdminUsername"
+                   data-val="true" data-val-required="{{res 'PleaseProvideCoAdminName' _encode='attr'/}}"
+                   data-val-length-min="6" data-val-length-max="512" data-val-length="{{res 'UsernameMustBeAStringBetweenMinAnd' _encode='attr'/}}"
+                   data-val-regex-pattern="^[\.\-\+\w\u007F-\uFFFF\@\\]+$" data-val-regex="{{res 'PleaseEnterAValidAccountName' _encode='attr'/}}" />
+        </div>
+        <div id="aux-manageCoadminSubscriptions"></div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <ComponentGroup Id="PowerShellScript">
+    <Component Id="CP9128391283123" Directory="WEBSITEDIR"
+               Guid="{d532d6f6-bc69-4b26-9dd4-67016368dbfe}">
+        <File Id="PowerShellScript" KeyPath="yes"
+            Source="..\Register-ResourceProvider.ps1" 
+              Name="Register-ResourceProvider.ps1"/>
+    </Component>
+  </ComponentGroup>
+</Include>

@@ -1,0 +1,76 @@
+.fxshell-drawer-menu li div.icon.DomainTenant {
+    background-position: 0 -97px;
+}
+
+.rps-search-container {
+    width: 350px;
+}
+
+.rps-radio-container {
+    margin-bottom: 10px;
+}
+
+    .rps-radio-container label {
+        display: inline;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+        font-size: 12px;
+        margin-left: 5px;
+        text-transform: none;
+        vertical-align: middle;
+    }
+
+    .rps-radio-container input {
+        vertical-align: middle;
+    }
+
+#rps-settings input[type="text"], #dm-settings input[type="password"] {
+    padding: 4px;
+    width: 200px;
+}
+
+.aux-readonlyvalue > .rps-contact-line {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+    .aux-readonlyvalue > .rps-contact-line.first-line {
+        margin-top: 10px;
+    }
+
+    .aux-readonlyvalue > .rps-contact-line.last-line {
+        margin-bottom: 20px;
+    }
+
+.rps-info-value {
+    width: 550px;
+}
+
+.rps-create-grid-container .fx-grid-container {
+    width: 550px;
+    height: 215px;
+}
+
+.rps-create-grid-container.large .fx-grid-container {
+    /* Use a larger grid when we hide the subscription selector */
+    width: 550px;
+    height: 400px;
+}
+
+.rps-grid-scroller {
+    margin: 0px;
+    overflow: auto;
+    padding: 0px;
+}
+
+.rps-contactinfo-scroller {
+    height: 380px;
+    margin-bottom: 29px;
+    overflow: auto;
+    width: 450px;
+}
+
+.rps-settingsTab {
+    width: 95%;
+}

@@ -1,0 +1,52 @@
+
+<p class="aux-dialogHeader">Add Runbook Wizard</p>
+<p class="aux-dialogSubHeader">Choose parameters for the runbook</p>
+
+<div id="demo-wizard-step-2">
+
+    
+    <div>These parameters allow the tenants to pass the selected parameters to your runbook. Only the selected type of parameter will be made available to the tenants. The text you enter in the label textbox will be displayed to the tenant when they run the runbook.</div>
+    <br />
+    <div id="VMDropDownDiv">
+        <label for="VMDropDownLabel" class="aux-dialog-item">List of tenant VM's</label>
+        <input type="checkbox" id="VMDropDownCheckBox" />
+        <input id="VMDropDownTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="StringParamDiv">
+        <label for="StringParamLabel" class="aux-dialog-item">String Parameter</label>
+        <input type="checkbox" id="StringParamCheckBox" />
+        <input id="StringParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="IntParamDiv">
+        <label for="IntParamLabel" class="aux-dialog-item">Integer Parameter</label>
+        <input type="checkbox" id="IntParamCheckBox" />
+        <input id="IntParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="DateParamDiv">
+        <label for="DateParamLabel" class="aux-dialog-item">Date Parameter</label>
+        <input type="checkbox" id="DateParamCheckBox" />
+        <input id="DateParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="BoolParamDiv">
+        <label for="BoolParamLabel" class="aux-dialog-item">Boolean Parameter</label>
+        <input type="checkbox" id="BoolParamCheckBox" />
+        <input id="BoolParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+    <div id="StringArrayParamDiv">
+        <label for="StringArrayParamLabel" class="aux-dialog-item">String Array Parameter</label>
+        <input type="checkbox" id="StringArrayParamCheckBox" />
+        <input id="StringArrayParamTextBox" type="text" maxlength="1024" class="fx-textbox fx-validation fx-editablecontrol"
+               data-val="true" data-val-required="Required" data-val-length="The label length must be between {:min:} and {:max:}" data-val-length-min="1" data-val-length-max="100" />
+    </div>
+
+</div>

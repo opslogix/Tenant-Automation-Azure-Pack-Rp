@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <!-- TODO: Put your code here. -->
+    <UI>
+      <Dialog Id="UserSettingsDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="Application" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Configure pool identity user settings" />
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+
+        <!-- domain -->
+        <Control Id="DomainPoolLabel" Type="Text" X="25" Y="60"
+            Width="100" Height="15" TabSkip="no" Text="&amp;Domain for AppPool:" />
+        <Control Id="DomainPoolEdit" Type="Edit" X="25" Y="75"
+            Width="220" Height="18"
+            Property="WEB_APP_POOL_IDENTITY_DOMAIN" Text="{80}" />
+        <!-- Login -->
+        <Control Id="LoginPoolLabel" Type="Text" X="25" Y="98"
+          Width="100" Height="15" TabSkip="no" Text="&amp;Login for AppPool:" />
+        <Control Id="LoginPoolEdit" Type="Edit" X="25" Y="114"
+          Width="220" Height="18" Property="WEB_APP_POOL_IDENTITY_NAME" Text="{80}" />
+        <!-- Password -->
+        <Control Id="PasswordPoolLabel" Type="Text" X="25" Y="135"
+          Width="100" Height="15" TabSkip="no" Text="&amp;Password for AppPool:" />
+        <Control Id="PasswordPoolEdit" Type="Edit" X="25" Y="150"
+          Width="220" Height="18" Property="WEB_APP_POOL_IDENTITY_PWD"
+          Text="{80}" Password="yes" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+
+        <!--
+        <Control Id="TenantPortDescription" Type="Text" X="25" Y="75" Width="57" Height="15" Text="Port" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="TenantPort" Type="MaskedEdit" Text="#####" X="25" Y="90" Width="57" Height="15" Property="TENANT_PORT" />
+
+        <Control Id="IdentityPoolUser" Type="Edit" Height="15" Width="340" X="25" Y="110" />
+        <Control Id="IdentityPoolPassword" Type="Edit" Password="yes" Height="15" Width="340" X="25" Y="125"/>
+        -->
+
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="Back" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Text="Next">
+          <Publish Property="ERROR_MESSAGE" Value="Please enter name and password" Order="1"><![CDATA[DATABASE_NAME = ""]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="4"><![CDATA[WEB_APP_POOL_IDENTITY_NAME = "" OR WEB_APP_POOL_IDENTITY_PWD = ""]]></Publish>
+
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

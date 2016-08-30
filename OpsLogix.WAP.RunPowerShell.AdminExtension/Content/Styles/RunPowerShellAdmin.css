@@ -1,0 +1,23 @@
+.adminQuickStart .steps-container .steps .quickstart-opslogix {
+    background: url(/Content/RunPowerShellAdmin/Images/opslogix_icon_50x50.png) no-repeat scroll 0px 50%;
+}
+.ts-quickStart .steps .quickstart-step1 {
+    background: url(/Content/RunPowerShellAdmin/Images/quickstart_connectto.png) no-repeat;
+}
+
+.ts-quickStart .steps .quickstart-step2 {
+    background: url(/Content/RunPowerShellAdmin/Images/quickstart_connectto.png) no-repeat;
+}
+
+.ts-quickStart .steps .quickstart-step3 {
+    background: url(/Content/RunPowerShellAdmin/Images/quickstart_connectto.png) no-repeat;
+}
+
+#ts-settings input[type="text"], #rps-settings input[type="password"] {
+    padding: 4px;
+    width: 300px;
+}
+
+.ts-settingsTab {
+    width: 95%;
+}

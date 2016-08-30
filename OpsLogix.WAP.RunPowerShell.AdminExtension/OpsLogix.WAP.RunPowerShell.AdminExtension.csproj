@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <AssemblyName>OpsLogix.WAP.RunPowerShell.AdminExtension</AssemblyName>
+    <RootNamespace>OpsLogix.WAP.RunPowerShell.AdminExtension</RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ADB067C9-C4FE-483C-BA6C-6C06FAD70116}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.Portal.Configuration">
+      <HintPath>..\References\Microsoft.Azure.Portal.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Portal.Core">
+      <HintPath>..\..\..\..\..\inetpub\MgmtSvc-AdminSite\bin\Microsoft.Portal.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Management.Common.HttpClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.WindowsAzure.Management.Common.HttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BearerMessageProcessingHandler.cs" />
+    <Compile Include="ClientFactory.cs" />
+    <Compile Include="Controllers\RunPowerShellAdminController.cs" />
+    <Compile Include="Models\EndpointModel.cs" />
+    <Compile Include="Models\SMARunbook.Model.cs" />
+    <Compile Include="Models\TARunbook.Model.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\extensions.data.js" />
+    <Content Include="Content\Images\opslogix_icon_50x50.png" />
+    <Content Include="Content\RunPowerShellAdminExtension.js" />
+    <Content Include="Content\Images\quickstart.png" />
+    <Content Include="Content\Images\quickstart_connectto.png" />
+    <Content Include="Content\Scripts\RunPowerShell.Controller.js" />
+    <Content Include="Content\Scripts\RunPowerShell.TenantRunbooksSubTab.js" />
+    <Content Include="Content\Scripts\RunPowerShell.QuickStartTab.js" />
+    <Content Include="Content\Scripts\RunPowerShell.ServiceOffer.js" />
+    <Content Include="Content\Scripts\RunPowerShell.SettingsTab.js" />
+    <Content Include="Content\Scripts\RunPowerShell.TenantRunbooksTab.js" />
+    <Content Include="Content\Styles\RunPowerShellAdmin.css" />
+    <Content Include="Content\Styles\RunPowerShellControls.css" />
+    <Content Include="Content\Templates\Dialogs\AddTenantRunbookWiz01.html" />
+    <Content Include="Content\Templates\Dialogs\AddTenantRunbookWiz03.html" />
+    <Content Include="Content\Templates\Dialogs\AddTenantRunbookWiz02.html" />
+    <Content Include="Content\Templates\Dialogs\RegisterEndpoint.html" />
+    <Content Include="Content\Templates\Tabs\TenantRunbooksSubTab.html" />
+    <Content Include="Content\Templates\Tabs\TenantRunbooksSubTabEmpty.html" />
+    <Content Include="Content\Templates\Tabs\TenantRunbooksTabEmpty.html" />
+    <Content Include="Content\Templates\Tabs\TenantRunbooksTab.html" />
+    <Content Include="Content\Templates\Tabs\QuickStartTab.html" />
+    <Content Include="Content\Templates\Tabs\QuickStartTabContent.html" />
+    <Content Include="Content\Templates\Tabs\SettingsTab.html" />
+    <Content Include="Content\testteam.png" />
+    <Content Include="Manifests\RunPowerShellAdminUiManifest.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OpsLogix.WAP.Base\OpsLogix.WAP.Base.csproj">
+      <Project>{8d180247-add6-4fb4-bb98-9f2b9f3ebd6e}</Project>
+      <Name>OpsLogix.WAP.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpsLogix.WAP.RunPowerShell.ApiClient\OpsLogix.WAP.RunPowerShell.ApiClient.csproj">
+      <Project>{cc16eeda-663b-4e41-8047-0aaed4a03680}</Project>
+      <Name>OpsLogix.WAP.RunPowerShell.ApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpsLogix.WAP.Common\OpsLogix.WAP.Common.csproj">
+      <Project>{8ee756c0-a570-4749-a25d-97d5320ca0a8}</Project>
+      <Name>OpsLogix.WAP.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Views\ServiceOffer\RunPowerShellOffer.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

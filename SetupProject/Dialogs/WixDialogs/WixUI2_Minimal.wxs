@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+/* ==========================================================================
+Proyecto: Instalador
+Empresa: 
+Creado por: Hugo Gonzalez Olaya
+Fecha creacion: 2012-01-31
+Fecha Actualizacion: 2012-01-31
+Descripcion: Grupo de dialogos y acciones tipo: Mi­nimo (Version modificada de Wix: WixUI_Minimal) 
+
+WixUI_Minimal: Interfaz de usuario simple, presenta un dialogo inicio que combina los servicios y las paginas del contrato de licencia. 
+Asume instalacion completa, sin que el usuario pueda seleccionar caracteristicas a instalar.
+========================================================================== */
+/* ==========================================================================
+Historial de versiones (Actualizado: 2012-01-31)
+1.0.0	Creado por: Hugo Gonzalez Olaya
+========================================================================== */
+
+/* ==========================================================================
+Links: 
+Fuentes: http://wix.codeplex.com/SourceControl/latest#src/ext/UIExtension/wixlib/
+========================================================================== */
+-->
+<!--
+First-time install dialog sequence:
+ - WixUI_WelcomeEulaDlg
+
+Maintenance dialog sequence:
+ WixUI_MaintenanceWelcomeDlg
+ - WixUI_MaintenanceTypeDlg
+ - WixUI_VerifyReadyDlg
+
+Patch dialog sequence:
+ - WixUI_WelcomeDlg
+ - WixUI_VerifyReadyDlg
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <UI Id="WixUI2_Minimal">
+            <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+            <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+            <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+            <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+            <Property Id="WixUI_Mode" Value="Minimal" />
+
+            <DialogRef Id="UI2ErrorDlg" />
+            <DialogRef Id="UI2FatalErrorDlg" />
+            <DialogRef Id="UI2FilesInUseDlg" />
+            <DialogRef Id="UI2MsiRMFilesInUseDlg" />
+            <DialogRef Id="UI2PrepareDlg" />
+            <DialogRef Id="UI2ProgressDlg" />
+            <DialogRef Id="UI2ResumeDlg" />
+            <DialogRef Id="UI2UserExitDlg" />
+            <DialogRef Id="UI2WelcomeDlg" />
+            <DialogRef Id="UI2WelcomeEulaDlg" />
+
+            <Publish Dialog="UI2ExitDlg" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+            <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceTypeDlg">1</Publish>
+
+            <Publish Dialog="UI2MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="UI2MaintenanceTypeDlg">1</Publish>
+
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceWelcomeDlg">1</Publish>
+
+            <Publish Dialog="UI2WelcomeDlg" Control="Next" Event="NewDialog" Value="UI2VerifyReadyDlg">Installed AND PATCH</Publish>
+            <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2WelcomeDlg" Order="2">Installed AND PATCH</Publish>
+
+            <InstallUISequence>
+                <Show Dialog="UI2WelcomeDlg" Before="UI2WelcomeEulaDlg">Installed AND PATCH</Show>
+                <Show Dialog="UI2WelcomeEulaDlg" Before="UI2ProgressDlg">NOT Installed</Show>
+            </InstallUISequence>
+
+            <Property Id="ARPNOMODIFY" Value="1" />
+        </UI>
+
+        <UIRef Id="WixUI2_Common" />
+    </Fragment>
+</Wix>

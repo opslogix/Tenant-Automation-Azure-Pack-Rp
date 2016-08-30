@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?include $(var.ProjectDir)\Includes\Variables.wxi ?>
+	<Fragment>
+		<UI>
+      <Dialog Id="DatabaseServerDlg" Width="370" Height="270" Title="!(loc.DatabaseServerDlg_Header)">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes"
+							NoPrefix="yes" Text="{\WixUI_Font_Title}!(loc.DatabaseServerDlg_Title)"/>
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.DatabaseServerDlg_Description)"/>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner"/>
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0"/>
+
+        <Control Id="DatabaseServerLabel" Type="Text" Height="20" Width="150" X="20" Y="50" Text="!(loc.DatabaseServerDlg_ServerLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="DatabaseServerDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="50"	Property="DATABASE_SERVERNAME" TabSkip="no">
+          <Publish Property="DATABASE_VALID_LOGON" Value="0">1</Publish>
+        </Control>
+
+        <Control Id="AuthenticationLabel" Type="Text" Height="20" Width="300" X="20" Y="70" Text="!(loc.DatabaseServerDlg_AuthenticationLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="DatabaseLogonType" Type="RadioButtonGroup" Height="40" Width="340" X="20" Y="90"
+							  Property="DATABASE_WINDOWSAUTHENTICATION" TabSkip="no" HasBorder ="yes">
+          <RadioButtonGroup Property="DATABASE_WINDOWSAUTHENTICATION">
+            <RadioButton Value="1" X="5" Y="5" Width="300" Height="15" Text="!(loc.DatabaseServerDlg_WinAuthentication)" />
+            <RadioButton Value="0" X="5" Y="20" Width="300" Height="15" Text="!(loc.DatabaseServerDlg_SqlAuthentication)" />
+          </RadioButtonGroup>
+          <Publish Property="DATABASE_VALID_LOGON" Value="0">1</Publish>
+        </Control>
+
+        <Control Id="AuthLoginIdLabelText" Type="Text" Height="20" Width="150" X="20" Y="135" Text="!(loc.DatabaseServerDlg_UserLabel)" Transparent="yes" NoPrefix="yes">
+          <Condition Action="disable">DATABASE_WINDOWSAUTHENTICATION="1"</Condition>
+          <Condition Action="enable">DATABASE_WINDOWSAUTHENTICATION="0"</Condition>
+        </Control>
+        <Control Id="AuthUsernameDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="135" Property="DATABASE_USERNAME" TabSkip="no">
+          <Condition Action="disable">DATABASE_WINDOWSAUTHENTICATION="1"</Condition>
+          <Condition Action="enable">DATABASE_WINDOWSAUTHENTICATION="0"</Condition>
+        </Control>
+
+        <Control Id="AuthPasswordLabelText" Type="Text" Height="20" Width="150" X="20" Y="155" Text="!(loc.DatabaseServerDlg_PasswordLabel)" Transparent="yes" NoPrefix="yes">
+          <Condition Action="disable">DATABASE_WINDOWSAUTHENTICATION="1"</Condition>
+          <Condition Action="enable">DATABASE_WINDOWSAUTHENTICATION="0"</Condition>
+        </Control>
+        <Control Id="AuthPasswordDataEntry" Type="Edit" Password="yes" Height="17" Width="190" X="170" Y="155" Property="DATABASE_PASSWORD" TabSkip="no">
+          <Condition Action="disable">DATABASE_WINDOWSAUTHENTICATION="1"</Condition>
+          <Condition Action="enable">DATABASE_WINDOWSAUTHENTICATION="0"</Condition>
+        </Control>
+
+        <Control Id="DatabaseLabel" Type="Text" Height="20" Width="150" X="20" Y="175" Text="!(loc.DatabaseServerDlg_DatabaseLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="DatabaseDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="175" Property="DATABASE_NAME" TabSkip="no">
+          <Publish Property="DATABASE_VALID_LOGON" Value="0">1</Publish>
+        </Control>
+
+        <Control Id="ExecuteScriptsCheckbox" Type="CheckBox" X="20" Y="195" Height="17" Width="160" Text="!(loc.DatabaseServerDlg_ExecuteScripts)"
+                 CheckBoxValue="1" Property="DATABASE_EXECUTESCRIPTS" />
+        <Control Id="IncludeDatabaInAuthenticatioCheckbox" Type="CheckBox" X="180" Y="195" Height="17" Width="160" Text="!(loc.DatabaseServerDlg_IncludeDatabaInAuthentication)"
+                 Property="DATABASE_AUTHENTICATEDATABASE" CheckBoxValue="0" />
+
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0"/>
+
+        <Control Id="Test" Type="PushButton" X="25" Y="243" Width="100" Height="17" Text="!(loc.DatabaseServerDlg_Test)">
+          <Condition Action="disable"><![CDATA[DATABASE_WINDOWSAUTHENTICATION = "0" AND DATABASE_USERNAME = ""]]></Condition>
+          <Condition Action="enable"><![CDATA[DATABASE_WINDOWSAUTHENTICATION = "1" OR (DATABASE_WINDOWSAUTHENTICATION = "0" AND DATABASE_USERNAME <> "" AND DATABASE_PASSWORD <> "")]]></Condition>
+
+          <Publish Event="DoAction" Value="CA_DataBaseTestConnection" Order="1">1</Publish>
+          <Publish Property="DATABASE_VALID_LOGON" Value="1" Order="2"><![CDATA[DATABASE_TEST_CONNECTION = "1"]]></Publish>
+          <Publish Property="DATABASE_VALID_LOGON" Value="0" Order="2"><![CDATA[DATABASE_TEST_CONNECTION = "0"]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="N" Order="3"><![CDATA[(DATABASE_TEST_CONNECTION = "1")]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.DatabaseServerDlg_AuthenticationErrorMessage)" Order="3"><![CDATA[DATABASE_TEST_CONNECTION = "0"]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="4"><![CDATA[DATABASE_TEST_CONNECTION = "0"]]></Publish>
+        </Control>
+        <Control Id="TestResult_Success" Type="Bitmap" X="250" Y="10" Width="24" Height="24" Text="BIN_SuccessBmp">
+          <Condition Action="hide"><![CDATA[DATABASE_VALID_LOGON <> 1]]></Condition>
+          <Condition Action="show"><![CDATA[DATABASE_VALID_LOGON = 1]]></Condition>
+        </Control>
+        <Control Id="TestResult_Failure" Type="Bitmap" X="250" Y="10" Width="24" Height="24" Text="BIN_ErrorBmp">
+          <Condition Action="hide"><![CDATA[DATABASE_VALID_LOGON = 1 ]]></Condition>
+          <Condition Action="show"><![CDATA[DATABASE_VALID_LOGON <> 1]]></Condition>
+        </Control>
+
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)"/>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.DatabaseServerDlg_DataBaseRequired)" Order="1">
+            <![CDATA[DATABASE_NAME = ""]]>
+          </Publish>
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.DatabaseServerDlg_UserPasswordRequired)" Order="1">
+            <![CDATA[(DATABASE_WINDOWSAUTHENTICATION = "0") AND (DATABASE_PASSWORD = "" OR DATABASE_USERNAME = "")]]>
+          </Publish>
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.DatabaseServerDlg_ServerRequired)" Order="1">
+            <![CDATA[DATABASE_SERVERNAME = ""]]>
+          </Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="2"><![CDATA[DATABASE_SERVERNAME = ""]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="2"><![CDATA[DATABASE_NAME = ""]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="2">
+            <![CDATA[(DATABASE_WINDOWSAUTHENTICATION = "0") AND (DATABASE_PASSWORD = "" OR DATABASE_USERNAME = "")]]>
+          </Publish>
+
+          <Publish Event="DoAction" Value="CA_SetDefaultIPAdress" Order="3"><![CDATA[DATABASE_MAILIP=""]]></Publish>
+          <Publish Property="DATABASE_MAILPROFILENAME" Value="[DATABASE_SERVERNAME]" Order="4"><![CDATA[DATABASE_MAILPROFILENAME=""]]></Publish>
+          <Publish Property="DATABASE_PROXYWINDOWSUSER" Value="[%USERDOMAIN]\[%USERNAME]" Order="4"><![CDATA[DATABASE_PROXYWINDOWSUSER=""]]></Publish>
+          <Publish Property="DATABASE_MAILBOX" Value="[%USERNAME]@[%USERDOMAIN]" Order="4"><![CDATA[DATABASE_MAILBOX=""]]></Publish>
+          <Publish Property="DATABASE_OPERATORMAILBOX" Value="[%USERNAME]@[%USERDOMAIN]" Order="4"><![CDATA[DATABASE_OPERATORMAILBOX=""]]></Publish>
+
+          <Condition Action="disable"><![CDATA[DATABASE_AUTHENTICATIONREQUIRED = "1" AND DATABASE_VALID_LOGON <> 1]]></Condition>
+          <Condition Action="enable"><![CDATA[DATABASE_AUTHENTICATIONREQUIRED = "0" OR DATABASE_VALID_LOGON = 1]]></Condition>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+<!--
+       Byron: I have commented this out as in phase one of the installer we do not need any SQL Agent scripts or Database Proxy to set email etc.
+       this should be investigated for usage for other projects
+    
+      <Dialog Id="DatabaseSQLAgentDlg" Width="370" Height="270" Title="!(loc.DatabaseSQLAgentDlg_Header)">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes"
+							NoPrefix="yes" Text="{\WixUI_Font_Title}!(loc.DatabaseSQLAgentDlg_Title)" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.DatabaseSQLAgentDlg_Description)"/>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner"/>
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0"/>
+
+        <Control Id="MailConfigLabel" Type="Text" Height="20" Width="300" X="20" Y="50" Text="{\WixUI_Font_Title}!(loc.DatabaseSQLAgentDlg_MailConfigLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="MailProfileLabel" Type="Text" Height="20" Width="150" X="20" Y="70" Text="!(loc.DatabaseSQLAgentDlg_MailProfileLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="MailProfileDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="70"	Property="DATABASE_MAILPROFILENAME" TabSkip="no">
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="1" Order="1"><![CDATA[DATABASE_MAILPROFILENAME <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="0" Order="1"><![CDATA[DATABASE_MAILPROFILENAME = ""]]></Publish>
+        </Control>          
+        <Control Id="MailBoxLabel" Type="Text" Height="20" Width="150" X="20" Y="90" Text="!(loc.DatabaseSQLAgentDlg_MailBoxLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="MailBoxDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="90"	Property="DATABASE_MAILBOX" TabSkip="no">
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="1" Order="1"><![CDATA[DATABASE_MAILBOX <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="0" Order="1"><![CDATA[DATABASE_MAILBOX = ""]]></Publish>
+        </Control>
+        <Control Id="MailIPLabel" Type="Text" Height="20" Width="150" X="20" Y="110" Text="!(loc.DatabaseSQLAgentDlg_MailIPLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="MailIPDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="110"	Property="DATABASE_MAILIP" TabSkip="no">
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="1" Order="1"><![CDATA[DATABASE_MAILIP <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="0" Order="1"><![CDATA[DATABASE_MAILIP = ""]]></Publish>
+        </Control>
+        
+        <Control Id="OperatorConfigLabel" Type="Text" Height="20" Width="300" X="20" Y="140" Text="{\WixUI_Font_Title}!(loc.DatabaseSQLAgentDlg_OperatorConfigLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="OperatorNameLabel" Type="Text" Height="20" Width="150" X="20" Y="160" Text="!(loc.DatabaseSQLAgentDlg_OperatorNameLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="OperatorNameDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="160"	Property="DATABASE_OPERATORNAMENAME" TabSkip="no"  Disabled="yes"/>
+        <Control Id="OperatorMailBoxLabel" Type="Text" Height="20" Width="150" X="20" Y="180" Text="!(loc.DatabaseSQLAgentDlg_MailBoxLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="OperatorMailBoxDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="180"	Property="DATABASE_OPERATORMAILBOX" TabSkip="no">
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="1" Order="1"><![CDATA[DATABASE_OPERATORMAILBOX <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="0" Order="1"><![CDATA[DATABASE_OPERATORMAILBOX = ""]]></Publish>
+        </Control>
+        
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0"/>
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)"/>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="1" Order="1"><![CDATA[DATABASE_MAILPROFILENAME <> "" AND DATABASE_MAILBOX <> "" AND DATABASE_MAILIP <> "" AND DATABASE_OPERATORMAILBOX <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_SQLAGENT" Value="0" Order="1"><![CDATA[DATABASE_MAILPROFILENAME = "" OR DATABASE_MAILBOX = "" OR DATABASE_MAILIP = "" OR DATABASE_OPERATORMAILBOX = ""]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="N" Order="2"><![CDATA[(DATABASE_VALID_SQLAGENT = "1")]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.ErrorValidation)" Order="2"><![CDATA[DATABASE_VALID_SQLAGENT = "0"]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="3"><![CDATA[DATABASE_VALID_SQLAGENT = "0"]]></Publish>
+          <Condition Action="disable"><![CDATA[DATABASE_VALID_SQLAGENT = "0"]]></Condition>
+          <Condition Action="enable"><![CDATA[DATABASE_VALID_SQLAGENT = "1"]]></Condition>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+
+      <Dialog Id="DatabaseProxyDlg" Width="370" Height="270" Title="!(loc.DatabaseProxyDlg_Header)">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes"
+							NoPrefix="yes" Text="{\WixUI_Font_Title}!(loc.DatabaseProxyDlg_Title)"/>
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.DatabaseProxyDlg_Description)"/>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner"/>
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0"/>
+
+        <Control Id="ProxyConfigLabel" Type="Text" Height="20" Width="300" X="20" Y="50" Text="{\WixUI_Font_Title}!(loc.DatabaseProxyDlg_ProxyConfigLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="ProxyWindowsUserLabel" Type="Text" Height="20" Width="150" X="20" Y="70" Text="!(loc.DatabaseProxyDlg_ProxyWindowsUserLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="ProxyWindowsUserDataEntry" Type="Edit" Height="17" Width="190" X="170" Y="70"	Property="DATABASE_PROXYWINDOWSUSER" TabSkip="no">
+          <Publish Property="DATABASE_VALID_PROXY" Value="1" Order="1"><![CDATA[DATABASE_PROXYWINDOWSUSER <> ""]]></Publish>
+          <Publish Property="DATABASE_VALID_PROXY" Value="0" Order="1"><![CDATA[DATABASE_PROXYWINDOWSUSER = ""]]></Publish>
+        </Control>
+
+        <Control Id="ProxyPasswordLabel" Type="Text" Height="20" Width="150" X="20" Y="90" Text="!(loc.DatabaseProxyDlg_ProxyPasswordLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="ProxyPasswordDataEntry" Type="Edit" Password="yes" Height="17" Width="190" X="170" Y="90" Property="DATABASE_PROXYPASSWORD" TabSkip="no">
+          <Publish Property="DATABASE_VALID_PROXY" Value="1" Order="1"><![CDATA[DATABASE_PROXYPASSWORD <> "" AND (DATABASE_PROXYPASSWORD = DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+          <Publish Property="DATABASE_VALID_PROXY" Value="0" Order="1"><![CDATA[DATABASE_PROXYPASSWORD = "" OR (DATABASE_PROXYPASSWORD <> DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+        </Control>
+        <Control Id="ProxyPasswordConfirmLabel" Type="Text" Height="20" Width="150" X="20" Y="110" Text="!(loc.DatabaseProxyDlg_ProxyPasswordConfirmLabel)" Transparent="yes" NoPrefix="yes"/>
+        <Control Id="ProxyPasswordConfirmDataEntry" Type="Edit" Password="yes" Height="17" Width="190" X="170" Y="110" Property="DATABASE_PROXYPASSWORDCONFIRM" TabSkip="no">
+          <Publish Property="DATABASE_VALID_PROXY" Value="1" Order="1"><![CDATA[DATABASE_PROXYPASSWORDCONFIRM <> "" AND (DATABASE_PROXYPASSWORD = DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+          <Publish Property="DATABASE_VALID_PROXY" Value="0" Order="1"><![CDATA[DATABASE_PROXYPASSWORDCONFIRM = "" OR (DATABASE_PROXYPASSWORD <> DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+        </Control>
+
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0"/>
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)"/>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Property="DATABASE_VALID_PROXY" Value="1" Order="1"><![CDATA[DATABASE_PROXYWINDOWSUSER <> "" AND DATABASE_PROXYPASSWORD <> "" AND (DATABASE_PROXYPASSWORD = DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+          <Publish Property="DATABASE_VALID_PROXY" Value="0" Order="1"><![CDATA[DATABASE_PROXYWINDOWSUSER = "" OR DATABASE_PROXYPASSWORD = "" OR (DATABASE_PROXYPASSWORD <> DATABASE_PROXYPASSWORDCONFIRM)]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="N" Order="2"><![CDATA[(DATABASE_VALID_PROXY = "1")]]></Publish>
+          <Publish Property="ERROR_MESSAGE" Value="!(loc.ErrorValidation)" Order="2"><![CDATA[DATABASE_VALID_PROXY = "0"]]></Publish>
+          <Publish Event="SpawnDialog" Value="GenericErrorDlg" Order="3"><![CDATA[DATABASE_VALID_PROXY = "0"]]></Publish>
+          <Condition Action="disable"><![CDATA[DATABASE_VALID_PROXY = "0"]]></Condition>
+          <Condition Action="enable"><![CDATA[DATABASE_VALID_PROXY = "1"]]></Condition>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>		  
+      
+      -->
+		</UI>
+	</Fragment>
+</Wix>

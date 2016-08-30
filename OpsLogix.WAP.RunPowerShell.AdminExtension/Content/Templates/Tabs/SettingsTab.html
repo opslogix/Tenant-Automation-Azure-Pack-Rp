@@ -1,0 +1,63 @@
+﻿<div class="rps-settingsTab">
+    <div id="rps-settings" class="waz-config">
+        <h2>Run PowerShell Resource Provider Settings Information</h2>
+
+        <div class="waz-config-section">
+        <div class="waz-config-setting">
+            <label for="endpointUrl">
+                Endpoint URL
+            </label>
+
+            <div class="waz-config-setting-value">
+                <input
+                        type="text"
+                        id="rps-endpointUrl"
+                        value=""
+                        maxlength="512" 
+                        class="fx-textbox fx-validation fx-editablecontrol",
+                        data-val="true" data-val-required="Required" 
+                        data-val-length-max="512" 
+                        data-val-regex="Not URL" data-val-regex-pattern="^(http|https):\/\/(.*)$" />
+            </div>
+        </div>
+        <div class="waz-config-setting">
+            <label for="username">
+                Username
+            </label>
+            <div class="waz-config-setting-value">
+                <input
+                    type="text"
+                    id="rps-username"
+                    data-val="true"
+                    data-val-length-max="128"
+                    data-val-required="Required"
+                    value="" />
+            </div>
+        </div>
+        <div class="waz-config-setting">
+            <label for="password">
+                Password
+            </label>
+            <div class="waz-config-setting-value">
+                <input
+                    type="password"
+                    id="rps-password"
+                    data-val="true"
+                    data-val-length-max="128"
+                    data-val-required="Required"
+                    value="" />
+            </div>
+        </div>        
+        </div>
+
+        <div class="waz-config-section">
+        <div class="waz-config-setting">
+        </div>
+
+            <div class="waz-config-setting">
+
+        </div>
+
+        </div>
+    </div>
+</div>

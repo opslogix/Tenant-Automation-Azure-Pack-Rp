@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"
+         xmlns:fw="http://schemas.microsoft.com/wix/FirewallExtension"
+         xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+         xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <!-- %SystemRoot%\System32\inetsrv\config\applicationHost.config -->
+  <Property Id="WebAppPoolName"
+            Value="MgmtSvc-RunPowershell"/>
+  <Property Id="WebSiteName"
+            Value="MgmtSvc-RunPowershell"/>
+  <Property Id="HTTP_PORT"
+            Secure="yes"
+            Value="30034" />
+  <DirectoryRef Id="WEBSITEDIR">
+    <Component Id="WebSite" Win64="yes"
+               Guid="{3B5C04B0-D5D5-474B-BEDD-DBE99D382754}">
+      
+      <CreateFolder />
+
+      <util:XmlFile Id="ModifyConnectionString"
+                    Action="setValue"
+                    Permanent="yes"
+                    File="[WEBSITEDIR]Web.config"
+                    ElementPath="/configuration/connectionStrings/add[\[]@name='ResourceProviderDatabase'[\]]"
+                    Name="connectionString"
+                    Value="Data Source=[DATABASE_SERVERNAME];Initial Catalog=OpsLogix.MgmtSvc.TenantAutomation;Integrated Security=True"
+                    SelectionLanguage="XPath"
+                    Sequence="1"/>
+
+      <util:XmlFile Id="SMAConnectionString"
+                    Action="setValue"
+                    Permanent="yes"
+                    File="[WEBSITEDIR]Web.config"
+                    ElementPath="/configuration/connectionStrings/add[\[]@name='SMAUrl'[\]]"
+                    Name="connectionString"
+                    Value="[SMA_URL]/00000000-0000-0000-0000-000000000000"
+                    SelectionLanguage="XPath"
+                    Sequence="1"/>
+
+      <!-- ApplicationPoolIdentity: "IIS APPPOOL\[WebAppPoolName]" -->
+      <iis:WebAppPool Id="WebAppPool"
+                      Name="[WebAppPoolName]"
+                      Identity="other"
+                      User="WebAppUser"
+                      ManagedPipelineMode="integrated"
+                      ManagedRuntimeVersion="v4.0" />
+
+      <util:User Id="WebAppUser"
+         CreateUser="no"
+         Name="[WEB_APP_POOL_IDENTITY_NAME]"
+         Password="[WEB_APP_POOL_IDENTITY_PWD]"
+         Domain="[WEB_APP_POOL_IDENTITY_DOMAIN]" />
+      
+      <!-- Nesting WebSite under a Component element will result in a WebSite being installed to the machine as the package is installed. -->
+      <iis:WebSite Id="WebSite"
+                   Description="[WebSiteName]"
+                   AutoStart="yes"
+                   StartOnInstall="yes"
+                   ConfigureIfExists="yes"
+                   Directory="WEBSITEDIR">
+        <iis:WebAddress Id="AllUnassignedHttp"
+                        Port="[HTTP_PORT]"
+                        Secure="no" />
+        <!-- Only for this sample sake we are using http. Recommendation is to make this true and use https -->
+        <iis:WebApplication Id="WebApplication"
+                            Name="[WebSiteName]"
+                            WebAppPool="WebAppPool" />
+        <iis:WebDirProperties Id="WebDirProperties"
+                              AnonymousAccess="yes"
+                              WindowsAuthentication="no"
+                              DefaultDocuments="Default.aspx" />
+      </iis:WebSite>
+
+      <fw:FirewallException Id="HTTP_In"
+                            Name="[WebSiteName] (HTTP-In)"
+                            Port="[HTTP_PORT]"
+                            Protocol="tcp"
+                            Scope="localSubnet" />
+    </Component>
+  </DirectoryRef>
+
+  <!-- icacls [WEBSITEDIR] /grant BUILTIN\IIS_IUSRS:(RX) -->
+  <SetProperty Id="QtExec_icacls_grant_IIS_IUSRS_RX"
+               Value="&quot;[System64Folder]icacls.exe&quot; &quot;[WEBSITEDIR].&quot; /grant *S-1-5-32-568:(RX)"
+               After="CostFinalize" />
+  <CustomAction Id="QtExec_icacls_grant_IIS_IUSRS_RX"
+                BinaryKey="WixCA"
+                DllEntry="CAQuietExec64"
+                Execute="deferred"
+                Return="check"
+                Impersonate="no" />
+
+  <!-- icacls [WEBSITEDIR] /grant BUILTIN\IIS_IUSRS:(OI)(CI)(IO)(GR,GE) -->
+  <SetProperty Id="QtExec_icacls_grant_IIS_IUSRS_GRGE"
+               Value="&quot;[System64Folder]icacls.exe&quot; &quot;[WEBSITEDIR].&quot; /grant *S-1-5-32-568:(OI)(CI)(IO)(GR,GE)"
+               After="CostFinalize" />
+  <CustomAction Id="QtExec_icacls_grant_IIS_IUSRS_GRGE"
+                BinaryKey="WixCA"
+                DllEntry="CAQuietExec64"
+                Execute="deferred"
+                Return="check"
+                Impersonate="no" />
+
+  <InstallExecuteSequence>
+    <Custom Action="QtExec_icacls_grant_IIS_IUSRS_RX"
+            After="CreateFolders">
+      <![CDATA[NOT Installed]]>
+    </Custom>
+    <Custom Action="QtExec_icacls_grant_IIS_IUSRS_GRGE"
+            After="CreateFolders">
+      <![CDATA[NOT Installed]]>
+    </Custom>
+  </InstallExecuteSequence>
+</Include>

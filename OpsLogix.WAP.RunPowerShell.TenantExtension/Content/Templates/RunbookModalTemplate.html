@@ -1,0 +1,26 @@
+﻿<!--<div class="aux-subscriptionChangeNameContainer">
+
+    <p class="aux-dialogHeader">{{res "ChangeSubscriptionName"/}}</p>
+    <p class="aux-dialogSubHeader">{{res "SelectFriendlyNameForYourSubscription"/}}</p>
+
+    <div class="aux-subscriptionChangeName">
+        <div id="aux-changeSubscriptionNameForm" class="aux-dialog-form">
+            <div class="aux-dialog-item">
+                <label for="subscriptionId">{{res "SubscriptionId"/}}</label>
+                <div id="subscriptionId">{{>data.Id}}</div>
+            </div>
+            <div class="aux-dialog-item">
+                <label for="newSubscriptionName" class="aux-dialog-item">{{res "SubscriptionFriendlyName"/}}</label>
+                <input id="newSubscriptionName" name="newSubscriptionName" type="text" maxlength="128" data-val="true" data-val-required="{{res 'SpecifySubscriptionName' _encode='attr'/}}" 
+                    data-val-length="{{res 'SubscriptionNameLengthCheck' _encode='attr'/}}" data-val-length-min="4" data-val-length-max="128" />
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="aux-readonlyvalue">
+    {{if domain.hasExpiry == true}}
+    <span>Expiration data</span>
+    <div>{{>domain.ExpiryDate}}</div>
+    {{/if}}
+</div>

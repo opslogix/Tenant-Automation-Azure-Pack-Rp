@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+
+/* ==========================================================================
+Links: 
+Fuentes: http://wix.codeplex.com/SourceControl/latest#src/ext/UIExtension/wixlib/
+========================================================================== */
+-->
+<!--
+WiX variables:
+ - WixUISupportPerMachine
+ - WixUISupportPerUser
+ 
+Todo:
+ - Clicking Install doesn't work! - APPLICATIONFOLDER isn't set; need to accept another "incoming" property.
+ - Replace this dialog set UI fragment with the UI extension.
+ = This set is still in active development.
+ = Future releases are likely to be incompatible.
+ = Future releases are likely to be much easier to use.
+ = Use at your own risk.
+
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <WixVariable Id="WixUISupportPerUser" Value="1" Overridable="yes" />
+        <WixVariable Id="WixUISupportPerMachine" Value="1" Overridable="yes" />
+
+        <PropertyRef Id="ApplicationFolderName" />
+
+        <CustomAction Id="WixSetDefaultPerUserFolder" Property="WixPerUserFolder" Value="[LocalAppDataFolder]Apps\[ApplicationFolderName]" Execute="immediate" />
+        <CustomAction Id="WixSetDefaultPerMachineFolder" Property="WixPerMachineFolder" Value="[ProgramFilesFolder][ApplicationFolderName]" Execute="immediate" />
+        <CustomAction Id="WixSetPerUserFolder" Property="APPLICATIONFOLDER" Value="[WixPerUserFolder]" Execute="immediate" />
+        <CustomAction Id="WixSetPerMachineFolder" Property="APPLICATIONFOLDER" Value="[WixPerMachineFolder]" Execute="immediate" />
+
+        <InstallExecuteSequence>
+            <Custom Action="WixSetDefaultPerUserFolder" Before="CostFinalize" />
+            <Custom Action="WixSetDefaultPerMachineFolder" After="WixSetDefaultPerUserFolder" />
+            <Custom Action="WixSetPerUserFolder" After="WixSetDefaultPerMachineFolder">ACTION="INSTALL" AND APPLICATIONFOLDER="" AND (ALLUSERS="" OR (ALLUSERS=2 AND (NOT Privileged)))</Custom>
+            <Custom Action="WixSetPerMachineFolder" After="WixSetPerUserFolder">ACTION="INSTALL" AND APPLICATIONFOLDER="" AND (ALLUSERS=1 OR (ALLUSERS=2 AND Privileged))</Custom>
+        </InstallExecuteSequence>
+        <InstallUISequence>
+            <Custom Action="WixSetDefaultPerUserFolder" Before="CostFinalize" />
+            <Custom Action="WixSetDefaultPerMachineFolder" After="WixSetDefaultPerUserFolder" />
+            <Custom Action="WixSetPerUserFolder" After="WixSetDefaultPerMachineFolder">ACTION="INSTALL" AND APPLICATIONFOLDER="" AND (ALLUSERS="" OR (ALLUSERS=2 AND (NOT Privileged)))</Custom>
+            <Custom Action="WixSetPerMachineFolder" After="WixSetPerUserFolder">ACTION="INSTALL" AND APPLICATIONFOLDER="" AND (ALLUSERS=1 OR (ALLUSERS=2 AND Privileged))</Custom>
+        </InstallUISequence>
+
+        <UI Id="WixUI2_Advanced">
+            <TextStyle Id="WixUI_Font_Normal" FaceName="!(loc.Advanced_Font_FaceName)" Size="!(loc.Advanced_Font_Normal_Size)" />
+            <TextStyle Id="WixUI_Font_Bigger" FaceName="!(loc.Advanced_Font_FaceName)" Size="!(loc.Advanced_Font_Bigger_Size)" />
+            <TextStyle Id="WixUI_Font_Title" FaceName="!(loc.Advanced_Font_FaceName)" Size="!(loc.Advanced_Font_Title_Size)" Bold="yes" />
+            <TextStyle Id="WixUI_Font_Emphasized" FaceName="!(loc.Advanced_Font_FaceName)" Size="!(loc.Advanced_Font_Emphasized_Size)" Bold="yes" />
+
+            <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+            <Property Id="WixUI_Mode" Value="Advanced" />
+
+            <DialogRef Id="UI2BrowseDlg" />
+            <DialogRef Id="UI2DiskCostDlg" />
+            <DialogRef Id="UI2ErrorDlg" />
+            <DialogRef Id="UI2FatalErrorDlg" />
+            <DialogRef Id="UI2FilesInUseDlg" />
+            <DialogRef Id="UI2MsiRMFilesInUseDlg" />
+            <DialogRef Id="UI2PrepareDlg" />
+            <DialogRef Id="UI2ProgressDlg" />
+            <DialogRef Id="UI2ResumeDlg" />
+            <DialogRef Id="UI2UserExitDlg" />
+            <DialogRef Id="UI2WelcomeDlg"/>
+
+            <Publish Dialog="UI2ExitDlg" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+            
+            <Publish Dialog="UI2BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="1">1</Publish>
+            <Publish Dialog="UI2BrowseDlg" Control="OK" Event="SpawnDialog" Value="UI2InvalidDirDlg" Order="2"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+            <Publish Dialog="UI2AdvancedWelcomeEulaDlg" Control="Advanced" Event="NewDialog" Value="UI2InstallScopeDlg" Order="1">!(wix.WixUISupportPerMachine) AND !(wix.WixUISupportPerUser)</Publish>
+            <Publish Dialog="UI2AdvancedWelcomeEulaDlg" Control="Advanced" Event="NewDialog" Value="UI2FeaturesDlg" Order="2">NOT !(wix.WixUISupportPerMachine)</Publish>
+            <Publish Dialog="UI2AdvancedWelcomeEulaDlg" Control="Advanced" Event="NewDialog" Value="UI2InstallDirDlg" Order="3">!(wix.WixUISupportPerMachine) AND NOT !(wix.WixUISupportPerUser)</Publish>
+
+            <Publish Dialog="UI2InstallScopeDlg" Control="Back" Event="NewDialog" Value="UI2AdvancedWelcomeEulaDlg">1</Publish>
+            <!-- override default WixAppFolder of WixPerMachineFolder as standard user won't be shown the radio group to set WixAppFolder -->
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Property="WixAppFolder" Value="WixPerUserFolder" Order="1">!(wix.WixUISupportPerUser) AND NOT Privileged</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Property="ALLUSERS" Value="{}" Order="2">WixAppFolder = "WixPerUserFolder"</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Property="ALLUSERS" Value="1" Order="3">WixAppFolder = "WixPerMachineFolder"</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Property="APPLICATIONFOLDER" Value="[WixPerUserFolder]" Order="4">WixAppFolder = "WixPerUserFolder"</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Property="APPLICATIONFOLDER" Value="[WixPerMachineFolder]" Order="5">WixAppFolder = "WixPerMachineFolder"</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Event="NewDialog" Value="UI2FeaturesDlg" Order="6">WixAppFolder = "WixPerUserFolder"</Publish>
+            <Publish Dialog="UI2InstallScopeDlg" Control="Next" Event="NewDialog" Value="UI2InstallDirDlg" Order="7">WixAppFolder = "WixPerMachineFolder"</Publish>
+
+            <Publish Dialog="UI2InstallDirDlg" Control="Back" Event="NewDialog" Value="UI2InstallScopeDlg">!(wix.WixUISupportPerUser)</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="Back" Event="NewDialog" Value="UI2AdvancedWelcomeEulaDlg">NOT !(wix.WixUISupportPerUser)</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="Next" Event="SpawnDialog" Value="UI2InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="Next" Event="NewDialog" Value="UI2FeaturesDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+            <Publish Dialog="UI2InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="UI2BrowseDlg" Order="2">1</Publish>
+
+            <Publish Dialog="UI2FeaturesDlg" Control="Back" Event="NewDialog" Value="UI2InstallScopeDlg">NOT Installed AND WixAppFolder = "WixPerUserFolder"</Publish>
+            <Publish Dialog="UI2FeaturesDlg" Control="Back" Event="NewDialog" Value="UI2InstallDirDlg">NOT Installed AND WixAppFolder = "WixPerMachineFolder"</Publish>
+            <Publish Dialog="UI2FeaturesDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceTypeDlg">Installed</Publish>
+
+            <Publish Dialog="UI2MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="UI2MaintenanceTypeDlg">1</Publish>
+
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="UI2FeaturesDlg">1</Publish>
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+            <Publish Dialog="UI2MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceWelcomeDlg">1</Publish>
+
+            <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+            <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2WelcomeDlg" Order="3">Installed AND PATCH</Publish>
+
+            <Publish Dialog="UI2WelcomeDlg" Control="Next" Event="NewDialog" Value="UI2VerifyReadyDlg">Installed AND PATCH</Publish>
+        </UI>
+
+        <InstallUISequence>
+            <Show Dialog="UI2WelcomeDlg" Before="UI2AdvancedWelcomeEulaDlg">Installed AND PATCH</Show>
+        </InstallUISequence>
+
+        <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
+        <UIRef Id="WixUI2_Common" />
+    </Fragment>
+</Wix>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<uiManifest>
+  <!--Run PowerShell-->
+  <extension name="RunPowerShellTenantExtension"
+             baseUri="~/Content/RunPowerShellTenant">
+    <scripts>
+      <script src="~/Scripts/ViewModel/HW.ViewModels.QuickCreate.js" />
+      <script src="~/Scripts/RunPowerShellTenant.Controller.js" />
+      <script src="~/Scripts/RunPowerShellTenant.FileSharesTab.js" />
+      <script src="~/Scripts/RunPowerShell.VmsTab.js" />
+      <script src="~/Scripts/RunPowerShellTenantExtension.RunPowerShellTabContainer.js" />
+      <script src="~/Scripts/RunPowerShellTenant.SettingsTab.js" />
+      <script src="~/RunPowerShellTenantExtension.js" />
+
+      <!--Self registration-->
+      <script src="~/extensions.data.js" />
+    </scripts>
+    <stylesheets>
+      <stylesheet src="~/Styles/RunPowerShellTenant.css"/>
+    </stylesheets>
+    <templates>
+      <template name="customCreatePreview"
+                src="~/Templates/Dialogs/CustomCreatePreview.html" />
+      <template name="CreateFileShare"
+                src="~/Templates/Dialogs/CreateFileShare.html" />
+      <template name="FileSharesTab"
+                src="~/Templates/Tabs/FileSharesTab.html" />
+      <template name="FileSharesTabEmpty"
+                src="~/Templates/Tabs/FileSharesTabEmpty.html" />
+
+      <template name="VmsTab"
+          src="~/Templates/Tabs/VmsTab.html" />
+      <template name="VmsTabEmpty"
+                src="~/Templates/Tabs/VmsTabEmpty.html" />
+      
+      <template name="settingsTab"
+                src="~/Templates/Tabs/SettingsTab.html" />
+      <template name="CreateFileShare"
+                  src="~/Templates/Menu/FileShareQuickCreate.html" />
+      
+      <template name="RunPowerShellTabContainer"
+                src="~/Templates/RunPowerShell.TabContainer.html" />
+      <template name="RunRunbookWithStringContainer"
+                src="~/Templates/RunRunbookWithString.Container.html" />
+      <template name="RunbookWiz01"
+                src="~/Templates/Dialogs/RunbookWiz01.html" />
+      
+    </templates>
+  </extension>
+</uiManifest>

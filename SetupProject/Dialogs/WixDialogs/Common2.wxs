@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+/* ==========================================================================
+Links: 
+Fuentes: http://wix.codeplex.com/SourceControl/latest#src/ext/UIExtension/wixlib/
+========================================================================== */
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--<Binary Id="WixUI_Ico_Completi" SourceFile="!(wix.WixUICompletiIco=$(var.CompletiIco))" />
+    <Binary Id="WixUI_Ico_Cust" SourceFile="!(wix.WixUICustIco=$(var.CustIco))" />
+    <Binary Id="WixUI_Ico_Inst" SourceFile="!(wix.WixUIInstIco=$(var.InstIco))" />
+    <Binary Id="WixUI_Ico_Remov" SourceFile="!(wix.WixUIRemovIco=$(var.RemovIco))" />
+    <Binary Id="WixUI_Ico_Repair" SourceFile="!(wix.WixUIRepairIco=$(var.RepairIco))" />-->
+
+      <UI Id="WixUI2_Common">
+        <UIRef Id="WixUI_Common" />
+        <UIRef Id="WixUI_ErrorProgressText" />
+       </UI>
+  </Fragment>
+</Wix>

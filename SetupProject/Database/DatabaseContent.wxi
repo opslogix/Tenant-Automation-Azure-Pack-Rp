@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <ComponentGroup Id="DatabaseContent">
+    <Component Id="cmpC27F8FCB3A833766E3D99E15703AB71F" Directory="D_SQLScripts"
+                Guid="{24A6124A-AC4B-4ACB-A418-7A52F341A5B3}">
+        <File Id="filB75B0E4F7222C61B5E17C2BB18463608" KeyPath="yes"
+              Source="SQLScripts\CreateDatabase.sql" />
+      </Component>
+  </ComponentGroup>
+</Include>

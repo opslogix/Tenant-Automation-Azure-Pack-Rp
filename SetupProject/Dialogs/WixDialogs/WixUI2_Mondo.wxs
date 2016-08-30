@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+
+/* ==========================================================================
+Links: 
+Fuentes: http://wix.codeplex.com/SourceControl/latest#src/ext/UIExtension/wixlib/
+========================================================================== */
+-->
+<!--
+First-time install dialog sequence:
+- WixUI_WelcomeDlg
+- WixUI_LicenseAgreementDlg
+- WixUI_SetupTypeDlg
+- WixUI_VerifyReadyDlg
+- WixUI_CustomizeDlg
+- WixUI_DiskCostDlg
+- WixUI_UI2BrowseDlg
+
+Maintenance dialog sequence:
+- WixUI_MaintenanceWelcomeDlg
+- WixUI_MaintenanceTypeDlg
+- WixUI_CustomizeDlg
+- WixUI_VerifyReadyDlg
+
+Patch dialog sequence:
+ - WixUI_WelcomeDlg
+ - WixUI_VerifyReadyDlg
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?include $(var.ProjectDir)\Includes\Variables.wxi ?>
+	<Fragment>
+    <UI Id="WixUI2_Mondo">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="Mondo" />
+
+      <DialogRef Id="UI2ErrorDlg" />
+      <DialogRef Id="UI2FatalErrorDlg" />
+      <DialogRef Id="UI2FilesInUseDlg" />
+      <DialogRef Id="UI2MsiRMFilesInUseDlg" />
+      <DialogRef Id="UI2PrepareDlg" />
+      <DialogRef Id="UI2ProgressDlg" />
+      <DialogRef Id="UI2ResumeDlg" />
+      <DialogRef Id="UI2UserExitDlg" />
+      
+      <Publish Dialog="UI2ExitDlg" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="UI2WelcomeDlg" Control="Next" Event="NewDialog" Value="UI2LicenseAgreementDlg">NOT Installed AND NOT PATCH</Publish>
+      <Publish Dialog="UI2WelcomeDlg" Control="Next" Event="NewDialog" Value="UI2VerifyReadyDlg">Installed AND PATCH</Publish>
+
+      <Publish Dialog="UI2LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="UI2WelcomeDlg">1</Publish>
+      <Publish Dialog="UI2LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="UI2SetupTypeDlg" Order="2">LicenseAccepted = "1"</Publish>
+	  <!--<Publish Dialog="UI2LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="UILicenseKeyDlg" Order="2">LicenseAccepted = "1"</Publish>-->
+
+	  <Publish Dialog="UILicenseKeyDlg" Control="Back" Event="NewDialog" Value="UI2LicenseAgreementDlg">1</Publish>
+	  <Publish Dialog="UILicenseKeyDlg" Control="Next" Event="ValidateProductID" Value="[PIDKEY]" Order="1">1</Publish>
+	  <Publish Dialog="UILicenseKeyDlg" Control="Next" Event="NewDialog" Value="UI2SetupTypeDlg" Order="2">ProductID</Publish>
+
+	    <Publish Dialog="UI2SetupTypeDlg" Control="Back" Event="NewDialog" Value="UI2LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="UI2SetupTypeDlg" Control="TypicalButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+      <Publish Dialog="UI2SetupTypeDlg" Control="CustomButton" Event="NewDialog" Value="UI2CustomizeDlg">1</Publish>
+      <Publish Dialog="UI2SetupTypeDlg" Control="CompleteButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+
+      <Publish Dialog="UI2CustomizeDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceTypeDlg" Order="1">WixUI_InstallMode = "Change"</Publish>
+      <Publish Dialog="UI2CustomizeDlg" Control="Back" Event="NewDialog" Value="UI2SetupTypeDlg" Order="2">WixUI_InstallMode = "InstallCustom"</Publish>
+      <Publish Dialog="UI2CustomizeDlg" Control="Next" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+
+      <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2CustomizeDlg" Order="1">WixUI_InstallMode = "InstallCustom"</Publish>
+      <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2SetupTypeDlg" Order="2">WixUI_InstallMode = "InstallTypical" OR WixUI_InstallMode = "InstallComplete"</Publish>
+      <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2CustomizeDlg" Order="3">WixUI_InstallMode = "Change"</Publish>
+      <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceTypeDlg" Order="4">WixUI_InstallMode = "Repair" OR WixUI_InstallMode = "Remove"</Publish>
+      <Publish Dialog="UI2VerifyReadyDlg" Control="Back" Event="NewDialog" Value="UI2WelcomeDlg" Order="2">WixUI_InstallMode = "Update"</Publish>
+
+      <Publish Dialog="UI2MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="UI2MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="UI2MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="UI2CustomizeDlg">1</Publish>
+      <Publish Dialog="UI2MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+      <Publish Dialog="UI2MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="UI2VerifyReadyDlg">1</Publish>
+      <Publish Dialog="UI2MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="UI2MaintenanceWelcomeDlg">1</Publish>
+    </UI>
+
+    <UIRef Id="WixUI2_Common" />
+  </Fragment>
+</Wix>

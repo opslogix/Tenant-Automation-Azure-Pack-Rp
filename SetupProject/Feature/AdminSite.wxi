@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- Source Locations -->
+  <?ifndef AdminExtensionRoot ?>
+  <?define AdminExtensionRoot="..\OpsLogix.WAP.RunPowerShell.AdminExtension" ?>
+  <?endif?>
+
+  <?ifndef AdminExtensionTargetDir ?>
+  <?define AdminExtensionTargetDir="$(var.OpsLogix.WAP.RunPowerShell.AdminExtension.TargetDir)" ?>
+  <?endif?>
+
+  <DirectoryRef Id="AdminSiteBinDir">
+    <Component Id="A_OpsLogix.WAP.RunPowerShell.AdminExtension.dll"
+               Guid="{430E9349-1142-4F2F-9EB1-B4D9B087BE5E}">
+      <File Id="A_OpsLogix.WAP.RunPowerShell.AdminExtension.dll"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionTargetDir)\OpsLogix.WAP.RunPowerShell.AdminExtension.dll" />
+    </Component>
+    <Component Id="A_OpsLogix.WAP.RunPowerShell.ApiClient.dll"
+               Guid="{AEC31E4F-1D64-4B37-B611-18BA9D16D4A8}">
+      <File Id="A_OpsLogix.WAP.RunPowerShell.ApiClient.dll"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionTargetDir)\OpsLogix.WAP.RunPowerShell.ApiClient.dll" />
+    </Component>
+    <Component Id="A_OpsLogix.WAP.Common.dll"
+               Guid="{90F44EEE-9C9A-465A-8F48-CF57F9EC3F56}">
+      <File Id="A_OpsLogix.WAP.Common.dll"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionTargetDir)\OpsLogix.WAP.Common.dll" />
+    </Component>
+    <Component Id="A_OpsLogix.WAP.Base.dll"
+               Guid="{691F8E74-A5F0-442A-92BE-B648D1A2B96D}">
+      <File Id="A_OpsLogix.WAP.Base.dll"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionTargetDir)\OpsLogix.WAP.Base.dll" />
+    </Component>
+  </DirectoryRef>
+  <DirectoryRef Id="AdminSiteContentExtDir">
+    <Component Id="A_extensions.data.js"
+               Guid="{1422B3FA-6140-4D08-81ED-14055A7AACBB}">
+      <File Id="A_extensions.data.js"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionRoot)\Content\extensions.data.js" />
+    </Component>
+    <Component Id="A_RunPowerShellAdminExtension.js"
+               Guid="{821EF1B7-E509-40C0-97DE-E1AA58E01085}">
+      <File Id="A_RunPowerShellAdminExtension.js"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionRoot)\Content\RunPowerShellAdminExtension.js" />
+    </Component>
+    <Component Id="A_testteam.png"
+               Guid="{085379A1-DD17-4D0D-B9B3-C43F75BC78E2}">
+      <File Id="A_testteam.png"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionRoot)\Content\testteam.png" />
+    </Component>
+    <Directory Id="A_Images"
+               Name="Images">
+      <Component Id="A_quickstart.png"
+                 Guid="{BE3E67F1-DAF6-48BD-82F6-02C49E32F2D1}">
+        <File Id="A_quickstart.png"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Images\quickstart.png" />
+      </Component>
+      <Component Id="A_quickstart_connectto.png"
+                 Guid="{8E98C071-A934-413A-B80C-0C9B341301C6}">
+        <File Id="A_quickstart_connectto.png"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Images\quickstart_connectto.png" />
+      </Component>
+      <Component Id="A_opslogix_icon_50x50.png"
+           Guid="{8E98C071-A934-413A-B80C-0C9B341301C7}">
+        <File Id="A_opslogix_icon_50x50.png"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Images\opslogix_icon_50x50.png" />
+      </Component>
+    </Directory>
+    <Directory Id="A_Scripts"
+               Name="Scripts">
+      <Component Id="A_RunPowerShell.Controller.js"
+                 Guid="{EB5C7555-8B23-4649-A7CC-B0F8E4FA1F52}">
+        <File Id="A_RunPowerShell.Controller.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.Controller.js" />
+      </Component>
+      <Component Id="A_RunPowerShell.QuickStartTab.js"
+                 Guid="{82867C63-52CE-4A42-B61E-8A0F8646C7AC}">
+        <File Id="A_RunPowerShell.QuickStartTab.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.QuickStartTab.js" />
+      </Component>
+      <Component Id="A_RunPowerShell.SettingsTab.js"
+                 Guid="{CC2E7B2E-3CBA-40E7-8F4E-2AECC0D23C74}">
+        <File Id="A_RunPowerShell.SettingsTab.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.SettingsTab.js" />
+      </Component>
+      <Component Id="A_RunPowerShell.ServiceOffer.js"
+                 Guid="{841E6FF4-28A4-43C1-85B2-74E237239E38}">
+        <File Id="A_RunPowerShell.ServiceOffer.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.ServiceOffer.js" />
+      </Component>
+
+      <Component Id="A_RunPowerShell.TenantRunbooksSubTab.js"
+           Guid="{841E6FF4-28A4-43C1-85B2-74E237339E38}">
+        <File Id="A_RunPowerShell.TenantRunbooksSubTab.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.TenantRunbooksSubTab.js" />
+      </Component>
+
+      <Component Id="A_RunPowerShell.TenantRunbooksTab.js"
+           Guid="{841E6FF4-28A4-43C1-85B2-74E437239E38}">
+        <File Id="A_RunPowerShell.TenantRunbooksTab.js"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Scripts\RunPowerShell.TenantRunbooksTab.js" />
+      </Component>
+
+    </Directory>
+    <Directory Id="A_Styles"
+               Name="Styles">
+      <Component Id="A_RunPowerShellAdmin.css"
+                 Guid="{A7D89E16-A565-435B-9B46-E28BF9EBE1F5}">
+        <File Id="A_RunPowerShellAdmin.css"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Styles\RunPowerShellAdmin.css" />
+      </Component>
+      <Component Id="A_RunPowerShellControls.css"
+                 Guid="{6C310CD2-D5BE-4CF3-97BB-C07615D24A14}">
+        <File Id="A_RunPowerShellControls.css"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Content\Styles\RunPowerShellControls.css" />
+      </Component>
+    </Directory>
+    <Directory Id="A_Templates"
+               Name="Templates">
+      <Directory Id="A_Dialogs"
+                 Name="Dialogs">
+        <Component Id="A_RegisterEndpoint.html"
+                   Guid="{A19EEDDB-F3AA-4730-BC6F-BEC02112058A}">
+          <File Id="A_RegisterEndpoint.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Dialogs\RegisterEndpoint.html" />
+        </Component>
+
+        <Component Id="A_AddTenantRunbookWiz01.html"
+                   Guid="{A19EEDDB-F3AA-4730-BC6F-BEC02112068A}">
+          <File Id="A_AddTenantRunbookWiz01.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Dialogs\AddTenantRunbookWiz01.html" />
+        </Component>
+        <Component Id="A_AddTenantRunbookWiz02.html"
+           Guid="{A19EEDDB-F3AA-4730-BC6F-BEC02122058A}">
+          <File Id="A_AddTenantRunbookWiz02.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Dialogs\AddTenantRunbookWiz02.html" />
+        </Component>
+        <Component Id="A_AddTenantRunbookWiz03.html"
+           Guid="{A19EEDDB-F3AA-4730-BC6F-BEC02312058A}">
+          <File Id="A_AddTenantRunbookWiz03.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Dialogs\AddTenantRunbookWiz03.html" />
+        </Component>
+        
+        
+        
+      </Directory>
+      <Directory Id="A_Tabs"
+                 Name="Tabs">
+        <Component Id="A_TenantRunbooksSubTab.html"
+                   Guid="{E4C423FA-85C1-41E3-9F2D-B53FAAEB890B}">
+          <File Id="A_TenantRunbooksSubTab.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\TenantRunbooksSubTab.html" />
+        </Component>
+        <Component Id="A_TenantRunbooksSubTabEmpty.html"
+                   Guid="{FCBA83D2-0111-4451-B182-CB0D1E483CD5}">
+          <File Id="A_TenantRunbooksSubTabEmpty.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\TenantRunbooksSubTabEmpty.html" />
+        </Component>
+        <Component Id="A_TenantRunbooksTab.html"
+                   Guid="{8BBBF42C-D3C6-451E-9CA6-4D44A10DB67F}">
+          <File Id="A_TenantRunbooksTab.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\TenantRunbooksTab.html" />
+        </Component>
+        <Component Id="A_TenantRunbooksTabEmpty.html"
+                   Guid="{34795456-4126-445E-A8A6-ABF7A493652F}">
+          <File Id="A_TenantRunbooksTabEmpty.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\TenantRunbooksTabEmpty.html" />
+        </Component>
+        <Component Id="A_QuickStartTab.html"
+                   Guid="{5B00D137-9325-4B88-9EE9-93EF13D4C2B4}">
+          <File Id="A_QuickStartTab.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\QuickStartTab.html" />
+        </Component>
+        <Component Id="A_QuickStartTabContent.html"
+                   Guid="{D3CB5A20-4BF9-486A-A3F2-69F78F42BFCB}">
+          <File Id="A_QuickStartTabContent.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\QuickStartTabContent.html" />
+        </Component>
+        <Component Id="A_SettingsTab.html"
+                   Guid="{F3069569-D695-4755-BC95-669EF21323DC}">
+          <File Id="A_SettingsTab.html"
+                KeyPath="yes"
+                Source="$(var.AdminExtensionRoot)\Content\Templates\Tabs\SettingsTab.html" />
+        </Component>
+        
+      </Directory>
+    </Directory>
+  </DirectoryRef>
+  <DirectoryRef Id="AdminSiteManifestsDir">
+    <Component Id="A_RunPowerShellAdminUiManifest.xml"
+               Guid="{FE2E5FBF-C3A0-4402-B08C-357847FE3B4C}">
+      <File Id="A_RunPowerShellAdminUiManifest.xml"
+            KeyPath="yes"
+            Source="$(var.AdminExtensionRoot)\Manifests\RunPowerShellAdminUiManifest.xml" />
+    </Component>
+  </DirectoryRef>
+  <DirectoryRef Id="AdminSiteViewsDir">
+    <Directory Id="A_ServiceOffer" Name="ServiceOffer">
+      <Component Id="A_RunPowerShellOffer.cshtml" Guid="{068988f1-0b2a-443b-a599-fd37bf88cb33}">
+        <File Id="A_RunPowerShellOffer.cshtml"
+              KeyPath="yes"
+              Source="$(var.AdminExtensionRoot)\Views\ServiceOffer\RunPowerShellOffer.cshtml" />
+      </Component>
+    </Directory>
+  </DirectoryRef>
+  <ComponentGroup Id="AdminSiteContent">
+    <ComponentRef Id="A_OpsLogix.WAP.RunPowerShell.AdminExtension.dll" />
+    <ComponentRef Id="A_OpsLogix.WAP.RunPowerShell.ApiClient.dll" />
+    <ComponentRef Id="A_OpsLogix.WAP.Common.dll" />
+    <ComponentRef Id="A_OpsLogix.WAP.Base.dll" />
+    <ComponentRef Id="A_extensions.data.js" />
+    <ComponentRef Id="A_RunPowerShellAdminExtension.js" />
+    <ComponentRef Id="A_testteam.png" />
+    <ComponentRef Id="A_quickstart.png" />
+    <ComponentRef Id="A_quickstart_connectto.png" />
+    <ComponentRef Id="A_RunPowerShell.Controller.js" />
+    <ComponentRef Id="A_RunPowerShell.TenantRunbooksSubTab.js" />
+    <ComponentRef Id="A_RunPowerShell.TenantRunbooksTab.js" />
+    <ComponentRef Id="A_RunPowerShell.QuickStartTab.js" />
+    <ComponentRef Id="A_RunPowerShell.SettingsTab.js" />
+    <ComponentRef Id="A_RunPowerShell.ServiceOffer.js" />
+    <ComponentRef Id="A_RunPowerShellAdmin.css" />
+    <ComponentRef Id="A_RunPowerShellControls.css" />
+    <ComponentRef Id="A_AddTenantRunbookWiz01.html" />
+    <ComponentRef Id="A_AddTenantRunbookWiz02.html" />
+    <ComponentRef Id="A_AddTenantRunbookWiz03.html" />
+    <ComponentRef Id="A_RegisterEndpoint.html" />
+    <ComponentRef Id="A_TenantRunbooksSubTab.html" />
+    <ComponentRef Id="A_TenantRunbooksSubTabEmpty.html" />
+    <ComponentRef Id="A_TenantRunbooksTab.html" />
+    <ComponentRef Id="A_TenantRunbooksTabEmpty.html" />
+    <ComponentRef Id="A_QuickStartTab.html" />
+    <ComponentRef Id="A_QuickStartTabContent.html" />
+    <ComponentRef Id="A_SettingsTab.html" />
+    <ComponentRef Id="A_RunPowerShellAdminUiManifest.xml" />
+    <ComponentRef Id="A_RunPowerShellOffer.cshtml" />
+    <ComponentRef Id="A_opslogix_icon_50x50.png" />
+    <!--<ComponentRef Id="A_RunbookModalTemplate.html" />-->
+    <!--<ComponentRef Id="A_RunPowerShell.Tab.Container.html" />-->
+  </ComponentGroup>
+</Include>
